@@ -12,6 +12,7 @@ public class ResolutionGenerator implements IMarkerResolutionGenerator {
 	
 	public IMarkerResolution[] getResolutions(IMarker marker) {
 		return new IMarkerResolution[] { 
+				new OpenVACCSResolution(),
 				new SuppressProblemInLineResolution(),
 				new SuppressProblemResolution(),
 				new SuppressFileResolution(),

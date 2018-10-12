@@ -60,6 +60,21 @@
             categoryId="com.googlecode.cppcheclipse.Category">
       </command>
     </extension>
+    <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="VACCS"
+            id="com.vaccs.Category">
+      </category>
+      <view
+            id="com.vaccs.ui.view"
+            name="VACCS"
+            icon="icons/sample.png"
+            class="com.vaccs.ui.VACCSView"
+            category="com.vaccs.Category"
+            inject="true">
+      </view>
+   </extension>
     
      <extension
          point="org.eclipse.ui.handlers">
