@@ -1,19 +1,8 @@
 package com.vaccs.ui;
 
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import org.eclipse.cdt.utils.Platform;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -26,7 +15,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -35,6 +23,8 @@ import org.eclipse.ui.part.ViewPart;
 import com.googlecode.cppcheclipse.core.CppcheclipsePlugin;
 import com.googlecode.cppcheclipse.ui.Utils;
 import com.vaccs.model.ViewContext;
+
+import vaccs.utilities.InternalFileRetriever;
 
 
 /**
@@ -56,6 +46,8 @@ import com.vaccs.model.ViewContext;
  */
 
 public class VACCSView extends ViewPart {
+	private static final int BROWSER = 0;
+	private static final int VIDEO = 1;
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -63,14 +55,13 @@ public class VACCSView extends ViewPart {
 	public static final String ID = "com.vaccs.ui.view";
 
 	private Label errorLabel;
-	private Button gotoURL;
 	
 	private CTabFolder tabFolder;
-	private CTabItem cTabItem[] = new CTabItem[4];
+	private CTabItem cTabItem[] = new CTabItem[2];
 	
-	private Browser explanationBrowser;
-	private Browser exampleBrowser;
-	private Browser exploitBrowser;
+	private Browser browser;
+	private Label videoLabel;
+	
 	
 
 
@@ -101,7 +92,7 @@ public class VACCSView extends ViewPart {
 		tabFolder.setLayoutData(data);
 		tabFolder.addSelectionListener(new SelectionAdapter() {
 		      public void widgetSelected(SelectionEvent event) {
-		          if(tabFolder.getSelection().equals(cTabItem[3])) {
+		          if(tabFolder.getSelection().equals(cTabItem[VIDEO])) {
 		        	  String url = null;
 					  try {
 						Field field = VideoURL.class.getField(ViewContext.getInstance().getProblemId());
@@ -109,94 +100,50 @@ public class VACCSView extends ViewPart {
 					  } catch (Exception ex) {
 						url = VideoURL.defaultVideo;
 					  }
-										
-					  try {
-						Utils.openUrl(url);
-					  } catch (Exception ex) {
-						CppcheclipsePlugin.logError("Could not open video page", ex);
+					  if(url != null) {
+						  videoLabel.setText("Loading Video for " + ViewContext.getInstance().getProblemId());
+						  try {
+								Utils.openUrl(url);
+							  } catch (Exception ex) {
+								CppcheclipsePlugin.logError("Could not open video page", ex);
+							  }  
+					  } else {
+						  videoLabel.setText("Video for " + ViewContext.getInstance().getProblemId() + " could not be found");
 					  }
 		          }
 		        }
 		      });
 		
 		setupTabFolder();
-//		initializeInformation();
-		
-
-		// Create the help context id for the viewer's control
-//		getSite().setSelectionProvider(viewer);
-//		makeActions();
-//		hookContextMenu();
-//		hookDoubleClickAction();
-//		contributeToActionBars();
-	}
-	
-	private String readFileIntoString(String filePath) {
-		
-		
-		try {
-			URL url = FileLocator.toFileURL(FileLocator.find(Platform.getBundle("com.googlecode.cppcheclipse.ui"), new Path(filePath), null));
-			return new String(Files.readAllBytes(Paths.get(new URI(url.toString().replaceAll(" ", "%20")))));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "";
-		} 
 	}
 
 	private void setupTabFolder() {
 		
-		cTabItem[0] = new CTabItem(tabFolder, SWT.NONE);
-		cTabItem[0].setText("What is this?");
+		cTabItem[BROWSER] = new CTabItem(tabFolder, SWT.NONE);
+		cTabItem[BROWSER].setText("What is this?");
 		try {
-			explanationBrowser = new Browser(tabFolder, SWT.NONE);
-			cTabItem[0].setControl(explanationBrowser);
+			browser = new Browser(tabFolder, SWT.NONE);
+			cTabItem[BROWSER].setControl(browser);
 		} catch (SWTError e) {
 			System.out.println("Could not instantiate Browser: " + e.getMessage());
 			Text text = new Text(tabFolder, SWT.BORDER);
 	        text.setText("Could not load browser");
-	        cTabItem[0].setControl(text);
+	        cTabItem[BROWSER].setControl(text);
 			return;
 		}
         
-        cTabItem[1] = new CTabItem(tabFolder, SWT.NONE);
-        cTabItem[1].setText("Examples");
-        try {
-        	exampleBrowser = new Browser(tabFolder, SWT.NONE);
-        	cTabItem[1].setControl(exampleBrowser);
-		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: " + e.getMessage());
-			Text text = new Text(tabFolder, SWT.BORDER);
-	        text.setText("Could not load browser");
-	        cTabItem[1].setControl(text);
-			return;
-		}
-        
-        cTabItem[2] = new CTabItem(tabFolder, SWT.NONE);
-        cTabItem[2].setText("Exploits");
-        try {
-        	exploitBrowser = new Browser(tabFolder, SWT.NONE);
-        	cTabItem[2].setControl(exploitBrowser);
-		} catch (SWTError e) {
-			System.out.println("Could not instantiate Browser: " + e.getMessage());
-			Text text = new Text(tabFolder, SWT.BORDER);
-	        text.setText("Could not load browser");
-	        cTabItem[2].setControl(text);
-			return;
-		}
-        
-        cTabItem[3] = new CTabItem(tabFolder, SWT.NONE);
-        cTabItem[3].setText("Video");
+        cTabItem[VIDEO] = new CTabItem(tabFolder, SWT.NONE);
+        cTabItem[VIDEO].setText("Video");
+        videoLabel = new Label(tabFolder, SWT.NONE);
+        cTabItem[BROWSER].setControl(videoLabel);
 	}
 	
 	
 	public void dataChanged() {
 		System.out.printf("problemId %s line %d fileName %s\n", ViewContext.getInstance().getProblemId(), ViewContext.getInstance().getLineNumber(), ViewContext.getInstance().getFile().getName());
 		errorLabel.setText(ViewContext.getInstance().getProblemId());
-		explanationBrowser.setText(readFileIntoString("./html/explanation/" + ViewContext.getInstance().getProblemId() + ".html"));
-		exampleBrowser.setText(readFileIntoString("./html/example/" + ViewContext.getInstance().getProblemId() + ".html"));
-		exploitBrowser.setText(readFileIntoString("./html/exploits/" + ViewContext.getInstance().getProblemId() + ".html"));
-		tabFolder.setSelection(cTabItem[0]);
+		browser.setText(InternalFileRetriever.readFileIntoString("./html/explanation/" + ViewContext.getInstance().getProblemId() + ".html"));
+		tabFolder.setSelection(cTabItem[BROWSER]);
 	}
 
 	@Override

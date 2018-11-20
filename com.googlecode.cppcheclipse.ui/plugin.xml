@@ -59,19 +59,37 @@
             name="Clear cppcheck Markers"
             categoryId="com.googlecode.cppcheclipse.Category">
       </command>
+      <category
+            id="VACCS.commmands.category"
+            name="VACCSFunction">
+      </category>
+      <command
+            categoryId="VACCS.commands.category"
+            id="VACCS.commands.DetectFunctions"
+            name="Detect Functions">
+      </command>
+      <command
+            id="VACCS.commands.RunStatic"
+            name="Static Analysis">
+      </command>
+      <command
+            defaultHandler="org.eclipse.ui.internal.about.AboutHandler"
+            id="VACCS.commands.RunDynamicAnalysis"
+            name="Dynamic Analysis">
+      </command>
     </extension>
     <extension
          point="org.eclipse.ui.views">
       <category
             name="VACCS"
-            id="com.vaccs.Category">
+            id="com.vaccs.view.category">
       </category>
       <view
             id="com.vaccs.ui.view"
             name="VACCS"
             icon="icons/sample.png"
             class="com.vaccs.ui.VACCSView"
-            category="com.vaccs.Category"
+            category="com.vaccs.view.category"
             inject="true">
       </view>
    </extension>
@@ -116,6 +134,10 @@
    				</or>
             </activeWhen>
       </handler>
+      <handler
+            class="vaccs.functiondetector.ui.ButtonHandler"
+            commandId="VACCS.commands.DetectFunctions">
+      </handler>
     </extension>
     
     <extension point="org.eclipse.ui.menus">
@@ -147,6 +169,32 @@
                commandId="com.googlecode.cppcheclipse.commands.ClearMarkersCommand">
          </command>
          </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:DynamicAnalysis">
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="VACCS.toolbars.toolBar">
+            <command
+                  commandId="VACCS.commands.DetectFunctions"
+                  icon="icons/skull.png"
+                  id="VACCS.toolbars.CheckFunctions"
+                  label="Detect Functions"
+                  style="push"
+                  tooltip="Check Function Use">
+            </command>
+            <command
+                  commandId="com.googlecode.cppcheclipse.commands.RunCommand"
+                  id="VACCS.toolbars.StaticAnalysis"
+                  label="Static Analysis"
+                  style="push"
+                  tooltip="Runs Static Analysis">
+            </command>
+         </toolbar>
       </menuContribution>
     </extension>
     
@@ -348,4 +396,34 @@
 			class="com.googlecode.cppcheclipse.ui.marker.ResolutionGenerator">
 		</markerResolutionGenerator>
 	</extension>
+ <extension
+       point="org.eclipse.ui.editors.annotationTypes">
+    <type
+          markerType="VACCS.FunctionDetector.RiskyMarker"
+          name="VACCS.FunctionDetector.RiskyMarker">
+    </type>
+ </extension>
+ <extension
+       point="org.eclipse.ui.editors.markerAnnotationSpecification">
+    <specification
+          annotationImageProvider="vaccs.functiondetector.ui.AnnotationImageProvider"
+          annotationType="VACCS.FunctionDetector.RiskyMarker"
+          colorPreferenceKey="VACCS.FunctionDetector.RiskyMarker.color"
+          colorPreferenceValue="192,192,255"
+          contributesToHeader="false"
+          highlightPreferenceKey="VACCS.FunctionDetector.RiskyMarker.highlight"
+          highlightPreferenceValue="true"
+          includeOnPreferencePage="true"
+          isGoToNextNavigationTarget="false"
+          label="Risky Function Marker"
+          overviewRulerPreferenceKey="VACCS.FunctionDetector.RiskyMarker.overview"
+          overviewRulerPreferenceValue="true"
+          presentationLayer="0"
+          showInNextPrevDropdownToolbarAction="true"
+          symbolicIcon="warning"
+          textPreferenceKey="VACCS.FunctionDetector.RiskyMarker.text"
+          verticalRulerPreferenceKey="VACCS.FunctionDetector.RiskyMarker.vertical"
+          verticalRulerPreferenceValue="true">
+    </specification>
+ </extension>
 </plugin>

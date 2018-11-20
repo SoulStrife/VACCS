@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: cppcheclipse UI
-Bundle-SymbolicName: com.googlecode.cppcheclipse.ui;singleton:=true
+Bundle-Name: VACCS
+Bundle-SymbolicName: VACCS;singleton:=true
 Bundle-Version: 1.1.1.qualifier
 Bundle-Activator: com.googlecode.cppcheclipse.ui.Activator
 Bundle-Vendor: Konrad Windszus
@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.4.0",
  org.eclipse.ui.editors;bundle-version="3.4.0",
  org.eclipse.jface.text;bundle-version="3.4.0",
  org.eclipse.cdt.make.core;bundle-version="5.0.0",
- org.eclipse.debug.ui
+ org.eclipse.debug.ui,
+ org.eclipse.cdt.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.cdt.core.model,
@@ -21,3 +22,4 @@ Import-Package: org.eclipse.cdt.core.model,
  org.eclipse.core.resources,
  org.eclipse.ui,
  org.eclipse.ui.console
+Export-Package: vaccs.functiondetector.data
