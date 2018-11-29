@@ -23,6 +23,8 @@ public class Problem implements Cloneable {
 	private final File file; // either absolute or relative filename (to
 								// project), maybe null for problem profiles or
 								// project related problems
+	private final int charStart;
+	private final int charEnd;
 	private boolean isEnabled;
 	private ProblemSeverity severity; // a severity which can be used as
 										// severity in IMarker
@@ -50,12 +52,21 @@ public class Problem implements Cloneable {
 	 */
 	public Problem(String id, String message, String category, File file,
 			IProject project, int line) {
+		this(id, message, category, file,
+			 project, line, -1, -1);
+	}
+	
+	public Problem(String id, String message, String category, File file,
+			IProject project, int line, int charStart, int charEnd) {
+		System.out.println("id " + id + " Category " + category );
 		this.id = id;
 		this.message = message;
 		this.category = category;
 		this.lineNumber = line;
 		this.file = file;
 		this.project = project;
+		this.charStart = charStart;
+		this.charEnd = charEnd;
 		setToDefault();
 	}
 

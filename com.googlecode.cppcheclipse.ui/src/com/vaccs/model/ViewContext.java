@@ -5,6 +5,11 @@ import java.io.File;
 public class ViewContext {
 	private static ViewContext instance = null;
 	
+	public static final int FUNCTION = 0;
+	public static final int STATIC = 1;
+	public static final int DYNAMIC = 1;
+	
+	private int category;
 	private String problemId;
 	private int lineNumber;
 	private File file;
@@ -41,5 +46,13 @@ public class ViewContext {
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
 	}
 }

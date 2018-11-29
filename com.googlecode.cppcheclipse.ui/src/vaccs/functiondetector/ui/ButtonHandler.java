@@ -101,7 +101,6 @@ public class ButtonHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		System.out.println("Starting execute");
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		ASTHandler ah = new ASTHandler();
 		ah.detectInsecureFunctions();

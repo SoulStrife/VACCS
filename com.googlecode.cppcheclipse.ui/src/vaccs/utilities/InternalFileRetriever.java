@@ -79,6 +79,12 @@ public class InternalFileRetriever {
 			return null;
 		return url.toString();
 	}
+	
+	public static String retrieveHTMLStaticURL(String problemID) {
+		String filename = "/html/Static/"+problemID+".html";
+		return retrieveStringURL(filename);
+	}
+	
 	public static String retrieveHTMLHelpURL(String functionName){
 		String filename = "/html/Help/"+functionName+".html";
 		return retrieveStringURL(filename);

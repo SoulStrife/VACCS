@@ -23,6 +23,7 @@ public class OpenVACCSResolution implements IMarkerResolution {
 			int line = marker.getAttribute(ProblemReporter.ATTRIBUTE_ORIGINAL_LINE_NUMBER, 0);
 			File file = new File(marker.getAttribute(ProblemReporter.ATTRIBUTE_FILE, "")); //$NON-NLS-1$
 			System.out.printf("problemId %s line %d fileName %s\n", problemId, line, file.getName());
+			ViewContext.getInstance().setCategory(ViewContext.STATIC);
 			ViewContext.getInstance().setProblemId(problemId);
 			ViewContext.getInstance().setLineNumber(line);
 			ViewContext.getInstance().setFile(file);

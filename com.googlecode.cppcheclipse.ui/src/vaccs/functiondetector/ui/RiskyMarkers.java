@@ -20,8 +20,7 @@ public class RiskyMarkers  {
 		IFile file = input.getFile();
 
 		try{
-			String text =doc.get(offset, length);		
-			System.out.println("text " + text + ", location " + doc.getLineOfOffset(offset)+1 + " line number " + doc.getLineOfOffset(offset)+1);
+			String text =doc.get(offset, length);
 			m=file.createMarker("VACCS.FunctionDetector.RiskyMarker");
 			m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
 			m.setAttribute(IMarker.LOCATION, doc.getLineOfOffset(offset)+1);

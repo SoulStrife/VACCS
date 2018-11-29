@@ -28,20 +28,17 @@ public class ASTHandler {
 	 * only the functions that we're looking for.
 	 */
 	public  void detectInsecureFunctions(){
-		System.out.println("Entering");
 		IEditorPart editor;
 		try{
 			 editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		}catch(NullPointerException e){
 			return;
 		}
-		System.out.println("past nullpointer");
 		ITranslationUnit tu = (ITranslationUnit) CDTUITools.getEditorInputCElement(editor.getEditorInput());
 		
 		MethodVisitor visitor = new MethodVisitor();
 		//ASTPrinter parser = new ASTPrinter();
 		resetMarkers();
-		System.out.println("Past creating vistor");
 		PrintStream out = null;
 		try {
 //			IASTNode[] children = tu.getAST(null, ITranslationUnit.AST_SKIP_ALL_HEADERS).getChildren();
@@ -63,9 +60,7 @@ public class ASTHandler {
 				return;
 			ast.accept(visitor);
 			List<FunctionRegions> fRegions = visitor.getDetectedFunctionNames();
-			System.out.println(fRegions.size() + " detected function names");
 			List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions();
-			System.out.println(insecureFunctions.size() + " risky functions");
 			IDocument doc = getDocument();
 			if(null==doc)
 				return;
@@ -73,7 +68,6 @@ public class ASTHandler {
 				markers = new ArrayList<IMarker>();
 			for(FunctionRegions func:fRegions){
 				if(insecureFunctions.contains(func.getFunctionName())){
-					System.out.println("marked function");
 					markers.add(RiskyMarkers.createMarker(doc, func.getOffSet(), func.getLength()));
 					
 				}

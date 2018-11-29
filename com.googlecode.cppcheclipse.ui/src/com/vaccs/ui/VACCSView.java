@@ -135,20 +135,36 @@ public class VACCSView extends ViewPart {
         cTabItem[VIDEO] = new CTabItem(tabFolder, SWT.NONE);
         cTabItem[VIDEO].setText("Video");
         videoLabel = new Label(tabFolder, SWT.NONE);
-        cTabItem[BROWSER].setControl(videoLabel);
+        cTabItem[VIDEO].setControl(videoLabel);
 	}
 	
 	
 	public void dataChanged() {
-		System.out.printf("problemId %s line %d fileName %s\n", ViewContext.getInstance().getProblemId(), ViewContext.getInstance().getLineNumber(), ViewContext.getInstance().getFile().getName());
+		System.out.printf("problemId %s\n", ViewContext.getInstance().getProblemId());
 		errorLabel.setText(ViewContext.getInstance().getProblemId());
-		browser.setText(InternalFileRetriever.readFileIntoString("./html/explanation/" + ViewContext.getInstance().getProblemId() + ".html"));
+		if(ViewContext.getInstance().getCategory() == ViewContext.STATIC) {
+			String url = InternalFileRetriever.retrieveHTMLStaticURL(ViewContext.getInstance().getProblemId());
+			if(url == null) {
+				System.out.println("url null");
+			}
+			System.out.println("url: " + url);
+			browser.setUrl(url);//InternalFileRetriever.retrieveHTMLStaticURL(url/*ViewContext.getInstance().getProblemId()*/));
+			
+		} else if (ViewContext.getInstance().getCategory() == ViewContext.FUNCTION) {
+			String url = InternalFileRetriever.retrieveHTMLHelpURL(ViewContext.getInstance().getProblemId());
+			if(url == null) {
+				System.out.println("url null");
+			}
+			System.out.println("url: " + url);
+			browser.setUrl(url);//InternalFileRetriever.retrieveHTMLHelpURL(ViewContext.getInstance().getProblemId()));
+			System.out.println("url now: " + browser.getUrl());
+		}
 		tabFolder.setSelection(cTabItem[BROWSER]);
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
+		browser.setFocus();
 		
 	}
 }

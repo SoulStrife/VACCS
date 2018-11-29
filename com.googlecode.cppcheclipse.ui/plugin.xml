@@ -426,4 +426,12 @@
           verticalRulerPreferenceValue="true">
     </specification>
  </extension>
+ <extension
+       point="org.eclipse.cdt.ui.textHovers">
+    <hover
+          activate="true"
+          class="vaccs.functiondetector.ui.HoverOnFunctionName"
+          id="VACCS.FunctionDetector.ui.HoverOnFunctionName">
+    </hover>
+ </extension>
 </plugin>
