@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>creat Tutorial</title>
+<title>struct stat Tutorial</title>
 <meta name="author" content="Justin Williams" >
 <meta name="copyright" content="Michigan Technological University">
-<meta name="keywords" content="C, creat, file">
+<meta name="keywords" content="C, mode, file">
 <meta name="description" content="">
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -12,14 +12,10 @@
 <meta http-equiv="expires" content="0">
 </head>
 <body>
-<h1>creat()</h1>
 
-<p>The C library function <code>creat()</code> creates a new file or rewrites an existing file
-The prototype is</p>
+<p>struct stat is what is returned for any call to <a href="stat.html"><code>stat()</code></a>, <a href="fstat.html"><code>fstat()</code></a>, or <a href="lstat.html"><code>lstat()</code></a>
 
-<p><code><b>int creat</b>(const char * <var>fd</var>, mode_t <var>mode</var>)</code></p>
 
-<p><code>creat(path, mode)</code> is equivalent to using <a href="open.html"><code>open</code></a><code>(path, O_WRONLY|O_CREAT|O_TRUNC, mode)</code></p>
 
 </body>
 </html>

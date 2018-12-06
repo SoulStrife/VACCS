@@ -17,7 +17,7 @@
 
 <h1>memmove()</h1>
 
-<p>The C library function <code>memmove()</code> copies a region of memory from one location to another. However, 
+<p>The C library function <code>memmove()</code> copies a region of memory from one location to another. However,
 unlike <a href="memcpy.html"><code>memcpy()</code></a>regions <i>may</i> overlap.
 The prototype is</p>
 
@@ -26,12 +26,12 @@ The prototype is</p>
 <p>Copying takes place as thought the bytes from <code><var>src</var></code> are first copyed to temporary space that does not
 overlap either <code><var>src</var></code> or <code><var>dest</var></code>. Then, the bytes are copied from the temporary
 space to <code><var>dest</var></code>.
-The variable <code><var>len</var></code> allows the programmer to specify how many bytes to copy. Unfortunately, there is no 
+The variable <code><var>len</var></code> allows the programmer to specify how many bytes to copy. Unfortunately, there is no
 way to specify the length of the area allocated for <code><var>dest</var></code>. If <code><var>dest</var></code>
 is less than <code><var>len</var></code> bytes long, then <code>memmove()</code> copies extra bytes beyond the area allocated
 for <code><var>src</var></code>. In addition, if the memory for
-<code><var>dest</var></code> is smaller than <code><var>len</var></code> bytes, memory outside of the bounds of 
-<code><var>dest</var></code> will be overwritten. No matter the size of memory for the source and destination 
+<code><var>dest</var></code> is smaller than <code><var>len</var></code> bytes, memory outside of the bounds of
+<code><var>dest</var></code> will be overwritten. No matter the size of memory for the source and destination
 <code><var>len</var></code> bytes are copied. If we consider the code below,</p>
 
 <p><pre>
@@ -43,10 +43,10 @@ int main(int argc, char **argv) {
   memmove(d,s,7);
 } </pre></p>
 
-<p>The call to <code>memmove()</code> will copy the string <code>"six12"</code> and also copy two extra bytes from the subsequent 
+<p>The call to <code>memmove()</code> will copy the string <code>"six12"</code> and also copy two extra bytes from the subsequent
 memory location to
 <code>d</code>. This is shown below where '?' indicatates an unknown character.</p>
 
-<p><img src="CmemExample.jpeg" width="50%" height="50%" alt=""></p>
+<p><img src="images/jpeg/CmemExample.jpeg" alt=""></p>
 </body>
 </html>

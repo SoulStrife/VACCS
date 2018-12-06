@@ -1,5 +1,31 @@
 <html>
+<head>
+<title>freopen Tutorial</title>
+<meta name="author" content="Justin Williams" >
+<meta name="copyright" content="Michigan Technological University">
+<meta name="keywords" content="C, freopen, file">
+<meta name="description" content="">
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="expires" content="0">
+</head>
 <body>
-<p>freopen Help</p>
+<h1>freopen()</h1>
+
+<p>The C library function <code>freopen()</code> associates a new filename with the given stream and closes the old file.
+The prototype is</p>
+
+<p><code><b>FILE *freopen</b>(const char *<var>filename</var>, const char * <var>mode</var>, FILE *<var>stream</var>)</code></p>
+
+<dl>
+  <dt><var>filename</var></dt><dd>Name of the file to be opened</dd>
+  <dt><var>mode</var></dt><dd>File modes as defined <a href="mode.html">here</a>.</dd>
+  <dt><var>stream</var></dt><dd>Reference to a FILE object that is to have its open file replaced
+</dl>
+
+<p>The potential problems with <code>freopen()</code> are very similar with the problems with <a href="fopen.html"><code>fopen()</code></a></p>
+
 </body>
 </html>

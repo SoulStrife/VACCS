@@ -1,5 +1,45 @@
 <html>
+<head>
+<title>fopen Tutorial</title>
+<meta name="author" content="Justin Williams" >
+<meta name="copyright" content="Michigan Technological University">
+<meta name="keywords" content="C, fopen, file">
+<meta name="description" content="">
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="expires" content="0">
+</head>
 <body>
-<p>fopen Help</p>
+<h1>fopen()</h1>
+
+<p>The C library function <code>fopen()</code> creates a stream using a filename
+The prototype is</p>
+
+<p><code><b>FILE * fopen</b>(const char *<var>filename</var>, const char * <var>mode</var>)</code></p>
+
+<dl>
+  <dt><var>filename</var></dt><dd>Name of the file to be opened</dd>
+  <dt><var>mode</var></dt><dd>File modes as defined <a href="mode.html">here</a>.</dd>
+</dl>
+
+
+<p>One of the potential problems with <code>fopen()</code> is that it could be susceptible to symbolic link attacks. For example, </p>
+
+<p><pre>
+int main(int argc, char* argv[]) {
+  //The file /tmp/temp.txt could be a symbolic link from /tmp/temp.txt to /etc/passwd (or some other system critical file)
+  FILE *f = fopen("/tmp/temp.txt", "w");
+
+  //If this program was ran as root, it would overwrite /etc/passwd with this
+  fputs("Not trying to overwrite anything", f);
+
+  fclose(f);
+
+  return 1;
+}
+</pre></p>
+
 </body>
 </html>

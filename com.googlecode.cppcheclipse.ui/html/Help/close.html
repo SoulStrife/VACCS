@@ -1,5 +1,30 @@
 <html>
+<head>
+<title>close Tutorial</title>
+<meta name="author" content="Justin Williams" >
+<meta name="copyright" content="Michigan Technological University">
+<meta name="keywords" content="C, close, file">
+<meta name="description" content="">
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+<meta http-equiv="content-style-type" content="text/css">
+<meta http-equiv="expires" content="0">
+</head>
 <body>
-<p>Close Help</p>
+<h1>close()</h1>
+
+<p>The C library function <code>close()</code> closes a file descriptor so that it will no longer point to a file and can then be reused
+The prototype is</p>
+
+<p><code><b>int close</b>(int <var>fd</var>)</code></p>
+
+<p>If <var>fd</var> references a file descriptor that is currently open (recently created by a call to <a href="open.html"><code>open()</code></a>), the resources associated
+with <var>fd</var> will be freed</p>
+
+<p>One potential problem with <code>close()</code> is when programmers do not check the return value. It is possible that errors
+from the last call to <a href="write.html"><code>write()</code></a> are only reported when <code>close()</code> is called. If the
+programmer ignores this, this can potentially lead to loss of data.
+
 </body>
 </html>
