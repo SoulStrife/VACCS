@@ -58,7 +58,6 @@ public class Problem implements Cloneable {
 	
 	public Problem(String id, String message, String category, File file,
 			IProject project, int line, int charStart, int charEnd) {
-		System.out.println("id " + id + " Category " + category );
 		this.id = id;
 		this.message = message;
 		this.category = category;

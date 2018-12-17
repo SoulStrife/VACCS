@@ -36,12 +36,17 @@ public class InternalFileRetriever {
 	public static File retrieveFile(String filename) throws IOException, URISyntaxException{
 		Bundle bundle = Platform.getBundle("VACCS");
 		URL fileURL = bundle.getEntry(filename);
-		if(null==fileURL) return null;
+		if(null==fileURL) {
+			System.out.println("fileURL null");
+			return null;
+		}
 		
 		File f =null;
 		URL resolvedFileURL=FileLocator.toFileURL(fileURL);
-		if(null==resolvedFileURL)
+		if(null==resolvedFileURL) {
+			System.out.println("resolvedFileURL null");
 			return null;
+		}
 		URI resolvedURI = new URI(resolvedFileURL.getProtocol(),resolvedFileURL.getPath(), null);
 		f = new File(resolvedURI);
 		

@@ -4,7 +4,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.cdt.ui.CDTUITools;
@@ -17,9 +16,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import vaccs.functiondetector.data.FunctionGroup;
 import vaccs.functiondetector.data.FunctionRegions;
 import vaccs.functiondetector.ui.RiskyMarkers;
-import vaccs.utilities.RiskyFunctionRetriever;
+import vaccs.utilities.RiskyFunctionHandler;
 
 public class ASTHandler {
 	private  static List<IMarker> markers;
@@ -60,18 +60,15 @@ public class ASTHandler {
 				return;
 			ast.accept(visitor);
 			List<FunctionRegions> fRegions = visitor.getDetectedFunctionNames();
-			List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions();
 			IDocument doc = getDocument();
 			if(null==doc)
 				return;
 			if(null==markers)
 				markers = new ArrayList<IMarker>();
 			for(FunctionRegions func:fRegions){
-				if(insecureFunctions.contains(func.getFunctionName())){
+				if(RiskyFunctionHandler.getInstance().isRisky(func.getFunctionName())) {
 					markers.add(RiskyMarkers.createMarker(doc, func.getOffSet(), func.getLength()));
-					
 				}
-				
 			}
 		} catch (CoreException e) {// | IOException | URISyntaxException   e) {
 			// TODO Auto-generated catch block
@@ -125,12 +122,12 @@ public class ASTHandler {
 	 * Compares list of detected functions to list of functions to watch out for.
 	 * @param detectedFunc List of detected functions from AST
 	 */
-	public  void printInsecure(List<String> detectedFunc){
+	public void printInsecure(List<String> detectedFunc){
 
-		List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions();
+//		List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions(new ArrayList<String>());
 				
 		for(String func:detectedFunc){
-			if(insecureFunctions.contains(func))
+			if(RiskyFunctionHandler.getInstance().isRisky(func)) 
 				System.out.println(func + " is insecure");
 		}
 		

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.model.ITranslationUnit;
@@ -22,7 +21,6 @@ import org.eclipse.ui.PlatformUI;
 import vaccs.functiondetector.visitors.ASTHandler;
 import vaccs.functiondetector.visitors.MethodVisitor;
 import vaccs.utilities.InternalFileRetriever;
-import vaccs.utilities.RiskyFunctionRetriever;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -40,15 +38,15 @@ public class ButtonHandler extends AbstractHandler {
 	 * Compares list of detected functions to list of functions to watch out for.
 	 * @param detectedFunc List of detected functions from AST
 	 */
-	public void printInsecure(List<String> detectedFunc){
-		List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions();
-				
-		for(String func:detectedFunc){
-			if(insecureFunctions.contains(func))
-				System.out.println(func + " is insecure");
-		}
-		
-	}
+//	public void printInsecure(List<String> detectedFunc){
+//		List<String> insecureFunctions = RiskyFunctionRetriever.getRiskyFunctions(new ArrayList<String>());
+//				
+//		for(String func:detectedFunc){
+//			if(insecureFunctions.contains(func))
+//				System.out.println(func + " is insecure");
+//		}
+//		
+//	}
 	/**
 	 * Function to find all invoked methods from AST and then print
 	 * only the functions that we're looking for.

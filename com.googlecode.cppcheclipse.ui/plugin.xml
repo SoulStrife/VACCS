@@ -92,6 +92,14 @@
             category="com.vaccs.view.category"
             inject="true">
       </view>
+      <view
+            category="com.vaccs.view.category"
+            class="com.vaccs.ui.FunctionView"
+            icon="icons/sample.png"
+            id="com.vaccs.function.ui.view"
+            inject="true"
+            name="Enable Functions">
+      </view>
    </extension>
     
      <extension

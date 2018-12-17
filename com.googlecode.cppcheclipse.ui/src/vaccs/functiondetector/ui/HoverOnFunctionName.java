@@ -16,8 +16,9 @@ import org.eclipse.jface.text.Region;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 
+import vaccs.functiondetector.data.RiskyFunction;
 import vaccs.utilities.InternalFileRetriever;
-import vaccs.utilities.RiskyFunctionRetriever;
+import vaccs.utilities.RiskyFunctionHandler;
 
 public class HoverOnFunctionName implements ITextHover, ICEditorTextHover, ITextHoverExtension, ITextHoverExtension2
 											{
@@ -52,7 +53,7 @@ public class HoverOnFunctionName implements ITextHover, ICEditorTextHover, IText
 		if(null==text){
 			return null;
 		}
-		else if(RiskyFunctionRetriever.isRisky(text)){
+		else if(RiskyFunctionHandler.getInstance().isRisky(text)){
 			String URL =null;
 			URL = InternalFileRetriever.retrieveHTMLSummaryHelpURL(text);
 			return URL;
@@ -78,15 +79,15 @@ public class HoverOnFunctionName implements ITextHover, ICEditorTextHover, IText
 	}
 	
 	private static class TokenFinder{
-		static List<String> keywords;
+		static List<RiskyFunction> keywords;
 		static int currentKeyword = 0;
 		private static String getNextToken(){
 			if(null==keywords){
-				keywords = RiskyFunctionRetriever.getRiskyFunctions();
+				keywords = RiskyFunctionHandler.getInstance().getRiskyFunctions();
 			}
 			String token = null;
 			try{
-				 token = keywords.get(currentKeyword);
+				 token = keywords.get(currentKeyword).getFunctionName();
 			}catch(IndexOutOfBoundsException e){
 				return null;
 			}

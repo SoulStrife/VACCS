@@ -1,37 +1,37 @@
-open
-creat
-fopen
-fdopen
-freopen
-close
-fclose
-gets
-fgets
-read
-fread
-write
-fwrite
-stat
-fstat
-lstat
-malloc
-free
-calloc
-realloc
-strcpy
-strncpy
-strcat
-strncat
-setuid
-seteuid
-setgid
-setegid
-setresuid
-setresgid
-memcpy
-memmove
-printf
-sprintf
-scanf
-sscanf
-new
+group1 open
+group1 creat
+group1 fopen
+group1 fdopen
+group1 freopen
+group1 close
+group1 fclose
+group1 gets
+group1 fgets
+group1 read
+group1 fread
+group1 write
+group1 fwrite
+group1 stat
+group1 fstat
+group1 lstat
+group1 malloc
+group1 free
+group1 calloc
+group1 realloc
+group2 strcpy
+group1 strncpy
+group1 strcat
+group1 strncat
+group1 setuid
+group1 seteuid
+group1 setgid
+group1 setegid
+group1 setresuid
+group1 setresgid
+group1 memcpy
+group1 memmove
+group1 printf
+group1 sprintf
+group1 scanf
+group1 sscanf
+group1 new
