@@ -8,9 +8,11 @@ For Linux:
 install the package libwebkitgtk-1.0-0 for the swt browser to work
 
 To add function names to check for edit:
+
 /com.googlecode.cppcheclipse.ui/files/functionNames.txt
 
 To add function groups to assign function names to:
+
 /com.googlecode.cppcheclipse.ui/files/functionGroups.txt
 
 To export plugin at the end of development I recommend looking at this tutorial which should point you in the right direction:
